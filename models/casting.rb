@@ -40,5 +40,28 @@ def delete()
   SqlRunner.run(sql, values)
 end
 
+def self.all()
+  sql = "SELECT * FROM castings"
+  castings = SqlRunner.run(sql)
+  return castings.map {|casting| Casting.new(casting)}
+end
+
+def read()
+  sql = "SELECT * FROM castings
+  WHERE id = $1"
+  values = [@id]
+  result = SqlRunner.run(sql, values)
+  return result[0]
+end
+
+def update()
+  sql =
+  "UPDATE castings
+  SET (star_id, movie_id, fee)
+  = ($1, $2, $3)
+  WHERE id = $4"
+  values = [@star_id, @movie_id, @fee, @id]
+  SqlRunner.run(sql, values)
+end
 
 end
