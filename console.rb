@@ -14,9 +14,9 @@ star1.save()
 star2 = Star.new ({'first_name' => 'Maggie', 'last_name' => 'Smith'})
 star2.save()
 
-movie1 = Movie.new ({'title' => 'Driving Miss Daisy', 'genre' => 'Manga'})
+movie1 = Movie.new ({'title' => 'Driving Miss Daisy', 'genre' => 'Manga', 'budget' => 5000})
 movie1.save()
-movie2 = Movie.new ({'title' => 'Shawshank Redemption', 'genre' => 'Musical'})
+movie2 = Movie.new ({'title' => 'Shawshank Redemption', 'genre' => 'Musical', 'budget' => 3000})
 movie2.save()
 
 casting1 = Casting.new({'star_id' => star1.id, 'movie_id' => movie1.id, 'fee' => 1000})

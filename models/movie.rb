@@ -3,12 +3,13 @@ require_relative("../db/sql_runner")
 class Movie
 
 attr_reader :id
-attr_accessor :title, :genre
+attr_accessor :title, :genre, :budget
 
 def initialize(options)
   @id = options['id'].to_i if options['id']
   @title = options['title']
   @genre = options['genre']
+  @budget = options['budget'].to_i
 end
 
 def save()
@@ -63,5 +64,26 @@ def update()
   SqlRunner.run(sql, values)
 end
 
+def stars()
+  sql = "SELECT stars.*
+        FROM stars
+        INNER JOIN castings
+        ON castings.star_id = stars.id
+        WHERE castings.movie_id = $1"
+  values = [@id]
+  stars = SqlRunner.run(sql, values)
+  result = stars.map { |star| Star.new (star)}
+  return result
+end
+
+def remaining_budget()
+  sql = "SELECT fee
+        FROM castings
+        WHERE castings.movie_id = $1"
+  values = [@id]
+  fees = SqlRunner.run(sql, values)[0]["fee"].to_i
+  fees = @budget - fees
+  return fees
+end
 
 end
