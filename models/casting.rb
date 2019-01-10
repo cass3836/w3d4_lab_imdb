@@ -12,5 +12,33 @@ def initialize(options)
   @fee = options['fee']
 end
 
+def save()
+  sql = "INSERT INTO castings
+  (
+    star_id,
+    movie_id,
+    fee
+  )
+  VALUES
+  (
+    $1, $2, $3
+  )
+  RETURNING id"
+  values = [@star_id, @movie_id, @fee]
+  casting = SqlRunner.run(sql, values).first
+  @id = casting['id'].to_i
+end
+
+def self.delete_all()
+  sql = "DELETE FROM castings"
+  SqlRunner.run(sql)
+end
+
+def delete()
+  sql = "DELETE FROM castings WHERE id = $1"
+  values = [@id]
+  SqlRunner.run(sql, values)
+end
+
 
 end
