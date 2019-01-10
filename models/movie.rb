@@ -16,14 +16,15 @@ def save()
   sql = "INSERT INTO movies
   (
     title,
-    genre
+    genre,
+    budget
   )
   VALUES
   (
-    $1, $2
+    $1, $2, $3
   )
   RETURNING id"
-  values = [@title, @genre]
+  values = [@title, @genre, @budget]
   movie = SqlRunner.run(sql, values).first
   @id = movie['id'].to_i
 end
@@ -57,10 +58,10 @@ end
 def update()
   sql =
   "UPDATE movies
-  SET (title, genre)
-  = ($1, $2)
-  WHERE id = $3"
-  values = [@title, @genre, @id]
+  SET (title, genre, budget)
+  = ($1, $2, $3)
+  WHERE id = $4"
+  values = [@title, @genre, @budget, @id]
   SqlRunner.run(sql, values)
 end
 
